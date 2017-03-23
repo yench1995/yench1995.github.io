@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yench1995.com/2017/02/13/树的遍历/index.html">
 <meta property="og:site_name" content="yench1995">
 <meta property="og:description" content="这篇博客整理了二叉树的中序，先序和后序遍历的最简单递归方法、利用栈的迭代方法以及常数空间的Morris方法，最后还带上了二叉树的层序遍历。老规矩，还是以c#实现，以List为输出方式。">
-<meta property="og:updated_time" content="2017-02-13T07:05:34.082Z">
+<meta property="og:updated_time" content="2017-02-13T11:59:54.554Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Traversal of Binary Tree">
 <meta name="twitter:description" content="这篇博客整理了二叉树的中序，先序和后序遍历的最简单递归方法、利用栈的迭代方法以及常数空间的Morris方法，最后还带上了二叉树的层序遍历。老规矩，还是以c#实现，以List为输出方式。">
@@ -393,7 +393,7 @@
 <li>将根节点压入 stack1;    </li>
 <li>弹出 stack1 栈顶的节点，将其压入 stack2;    </li>
 <li>将当前节点的左孩子和右孩子先后依次压入 stack1;    </li>
-<li>当所有元素都压入 stack2 后，依次弹出 stack2 的元素。<br>第一个栈的入栈顺序是：root, root.left, root.right; 第二个的栈的入栈顺序是 root, root.right, root.left。因此第二个栈的弹出顺序是：root.left, root.right, root。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public IList&lt;int&gt; PostorderTraversal(TreeNode root)</div><div class="line">&#123;</div><div class="line">    IList&lt;int&gt; res = new List&lt;int&gt;();</div><div class="line">    Stack&lt;TreeNode&gt; stack1 = new Stack&lt;TreeNode&gt;();</div><div class="line">    Stack&lt;TreeNode&gt; stack2 = new Stack&lt;TreeNode&gt;();</div><div class="line"></div><div class="line">    stack1.Push(root);</div><div class="line">    while(stack1.Count != 0)</div><div class="line">    &#123;</div><div class="line">        TreeNode temp = stack1.Pop();</div><div class="line">        stack2.Push(temp);</div><div class="line">        if(temp.left != null)</div><div class="line">            stack1.Push(temp.left);</div><div class="line">        if(temmp.right != null)</div><div class="line">            stack1.push(temp.right);</div><div class="line">    &#125;</div><div class="line">    while(stack2.Count != 0)</div><div class="line">    &#123;</div><div class="line">        res.Add(stack2.Pop().val);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return res;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>当所有元素都压入 stack2 后，依次弹出 stack2 的元素。<br>第一个栈的入栈顺序是：root, root.left, root.right; 第二个的栈的入栈顺序是 root, root.right, root.left。因此第二个栈的弹出顺序是：root.left, root.right, root。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public IList&lt;int&gt; PostorderTraversal(TreeNode root)</div><div class="line">&#123;</div><div class="line">    IList&lt;int&gt; res = new List&lt;int&gt;();</div><div class="line">    Stack&lt;TreeNode&gt; stack1 = new Stack&lt;TreeNode&gt;();</div><div class="line">    Stack&lt;TreeNode&gt; stack2 = new Stack&lt;TreeNode&gt;();</div><div class="line">    if(root != null)</div><div class="line">        stack1.Push(root);</div><div class="line">    while(stack1.Count != 0)</div><div class="line">    &#123;</div><div class="line">        TreeNode temp = stack1.Pop();</div><div class="line">        stack2.Push(temp);</div><div class="line">        if(temp.left != null)</div><div class="line">            stack1.Push(temp.left);</div><div class="line">        if(temp.right != null)</div><div class="line">            stack1.Push(temp.right);</div><div class="line">    &#125;</div><div class="line">    while(stack2.Count != 0)</div><div class="line">    &#123;</div><div class="line">        res.Add(stack2.Pop().val);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return res;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <h4 id="vesion-2-单栈法"><a href="#vesion-2-单栈法" class="headerlink" title="vesion 2: 单栈法"></a>vesion 2: 单栈法</h4><p>使用一个栈和一个prev节点来存储输出顺序。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">public IList&lt;int&gt; PostorderTraversal(TreeNode root)</div><div class="line">&#123;</div><div class="line">    IList&lt;int&gt; res = new List&lt;int&gt;();</div><div class="line">    Stack&lt;int&gt; stack = new Stack&lt;int&gt;();</div><div class="line">    TreeNode prev = root;</div><div class="line"></div><div class="line">    while(root != null)</div><div class="line">    &#123;</div><div class="line">        // The left subtree pushed into stack</div><div class="line">        while(root.left != null)</div><div class="line">        &#123;</div><div class="line">            stack.Push(root);</div><div class="line">            root = root.left;</div><div class="line">        &#125;</div><div class="line">        // The current treenode has no right child or the right child is visited</div><div class="line">        while(root != null &amp;&amp; (root.right == null || prev == root.right)) </div><div class="line">        &#123;</div><div class="line">            res.Add(root.val);</div><div class="line">            prev = root;</div><div class="line">            if(stack.Count == 0)</div><div class="line">                return;</div><div class="line">            root = stack.Pop();</div><div class="line">        &#125;</div><div class="line">        stack.Push(root);</div><div class="line">        root = root.right;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -455,6 +455,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/22/hashtable/" rel="prev" title="LeetCode Summary 1 ———— Hash Table">
+                LeetCode Summary 1 ———— Hash Table <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -524,7 +528,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -542,7 +546,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
